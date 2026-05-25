@@ -1,0 +1,1050 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CabLeads | Capture leads em feiras, exposições e eventos</title>
+    <meta
+      name="description"
+      content="CabLeads ajuda expositores a coletar, organizar e aproveitar leads em feiras, exposições e eventos com formulário manual, QR Code e leitura de crachá integrada."
+    />
+    <style>
+      :root {
+        --ink: #111827;
+        --muted: #5f6368;
+        --paper: #f5f5f5;
+        --white: #ffffff;
+        --wine: #6f0813;
+        --wine-dark: #4a0404;
+        --wine-soft: #8f1d2c;
+        --event: #9c5908;
+        --company: #522d06;
+        --lead: #4a0404;
+        --line: #e0e0e0;
+        --shadow: 0 24px 70px rgba(17, 24, 39, 0.18);
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .site-header {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.88);
+        border-bottom: 1px solid rgba(223, 229, 222, 0.9);
+        backdrop-filter: blur(18px);
+      }
+
+      .nav {
+        width: min(1160px, calc(100% - 40px));
+        height: 72px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        width: 132px;
+        height: 50px;
+      }
+
+      .brand-logo {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        object-fit: contain;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 0.94rem;
+        font-weight: 650;
+      }
+
+      .nav-links a:hover {
+        color: var(--wine);
+      }
+
+      .btn {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 20px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-weight: 800;
+        white-space: nowrap;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        color: var(--white);
+        background: var(--wine);
+        box-shadow: 0 12px 30px rgba(111, 8, 19, 0.28);
+      }
+
+      .btn-primary:hover {
+        background: var(--wine-dark);
+      }
+
+      .btn-secondary {
+        color: var(--white);
+        border-color: rgba(255, 255, 255, 0.65);
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 82vh;
+        display: grid;
+        align-items: center;
+        overflow: hidden;
+        color: var(--white);
+        background:
+          linear-gradient(90deg, rgba(36, 4, 8, 0.94) 0%, rgba(36, 4, 8, 0.78) 45%, rgba(36, 4, 8, 0.24) 100%),
+          url("assets/cableads-hero.png") center / cover no-repeat;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 120px;
+        background: linear-gradient(0deg, var(--paper), rgba(247, 248, 244, 0));
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        width: min(1160px, calc(100% - 40px));
+        margin: 72px auto 32px;
+        padding: 48px 0 80px;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+      }
+
+      .eyebrow {
+        width: fit-content;
+        margin: 0 0 18px;
+        max-width: 100%;
+        padding: 7px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.88);
+        background: rgba(111, 8, 19, 0.34);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        line-height: 1.3;
+        text-transform: uppercase;
+      }
+
+      .hero .eyebrow {
+        margin-bottom: 16px;
+        text-align: left;
+        white-space: normal;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        font-size: clamp(3rem, 8vw, 6.2rem);
+        line-height: 0.92;
+        letter-spacing: 0;
+      }
+
+      .hero-copy > p {
+        max-width: 610px;
+        margin-bottom: 30px;
+        color: rgba(255, 255, 255, 0.87);
+        font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .hero-proof {
+        width: min(1160px, calc(100% - 40px));
+        margin: -140px auto 0;
+        position: relative;
+        z-index: 3;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .proof-item {
+        min-height: 118px;
+        padding: 22px;
+        background: var(--white);
+      }
+
+      .proof-number {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--wine);
+        font-size: 1.65rem;
+        font-weight: 900;
+      }
+
+      .proof-item span:last-child {
+        color: var(--muted);
+        font-weight: 650;
+      }
+
+      section {
+        padding: 92px 0;
+      }
+
+      .section-inner {
+        width: min(1160px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .section-heading {
+        max-width: 760px;
+        margin-bottom: 42px;
+      }
+
+      .section-heading .eyebrow {
+        color: var(--wine);
+        border-color: rgba(111, 8, 19, 0.18);
+        background: rgba(111, 8, 19, 0.08);
+      }
+
+      h2 {
+        margin-bottom: 14px;
+        font-size: clamp(2rem, 4vw, 3.25rem);
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+
+      .section-heading p,
+      .feature p,
+      .step p,
+      .panel-copy p,
+      .event-text p,
+      .final-cta p {
+        color: var(--muted);
+        font-size: 1.02rem;
+      }
+
+      .mode-switcher {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 34px;
+        align-items: stretch;
+      }
+
+      .mode-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .mode-button {
+        width: 100%;
+        min-height: 108px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 16px;
+        align-items: center;
+        color: var(--ink);
+        background: var(--white);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .mode-button:hover,
+      .mode-button.is-active {
+        border-color: rgba(111, 8, 19, 0.5);
+        box-shadow: 0 18px 44px rgba(17, 24, 39, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .mode-button.is-active .mode-icon {
+        color: var(--white);
+        background: var(--wine);
+      }
+
+      .mode-icon,
+      .feature-icon,
+      .step-number {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--wine);
+        background: rgba(111, 8, 19, 0.1);
+        font-weight: 900;
+      }
+
+      .feature-icon svg {
+        width: 25px;
+        height: 25px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+      }
+
+      .mode-button strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1.05rem;
+      }
+
+      .mode-button span:last-child {
+        color: var(--muted);
+      }
+
+      .mode-panel {
+        min-height: 432px;
+        padding: 30px;
+        border-radius: var(--radius);
+        color: var(--white);
+        background: #1b1b1b;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mode-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(111, 8, 19, 0.34), rgba(156, 89, 8, 0.16)),
+          radial-gradient(circle at 80% 18%, rgba(143, 29, 44, 0.46), transparent 30%);
+      }
+
+      .panel-content {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 0.85fr;
+        gap: 26px;
+        align-items: center;
+      }
+
+      .phone-mock {
+        justify-self: center;
+        width: min(230px, 100%);
+        min-height: 360px;
+        border: 10px solid #0a1412;
+        border-radius: 28px;
+        background: #f9fbf7;
+        box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+      }
+
+      .phone-top {
+        height: 52px;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--white);
+        background: var(--wine);
+        font-weight: 800;
+      }
+
+      .phone-dots {
+        display: flex;
+        gap: 4px;
+      }
+
+      .phone-dots span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.75);
+      }
+
+      .phone-body {
+        padding: 16px;
+      }
+
+      .field-line {
+        height: 38px;
+        margin-bottom: 12px;
+        border: 1px solid #dce5dc;
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .field-line.short {
+        width: 72%;
+      }
+
+      .qr-block {
+        width: 126px;
+        height: 126px;
+        margin: 16px auto;
+        border: 9px solid #ffffff;
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, #101820 18px, transparent 18px) 0 0 / 36px 36px,
+          linear-gradient(#101820 18px, transparent 18px) 0 0 / 36px 36px,
+          #ffffff;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .badge {
+        padding: 7px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        color: rgba(255, 255, 255, 0.86);
+        background: rgba(255, 255, 255, 0.08);
+        font-size: 0.82rem;
+        font-weight: 750;
+      }
+
+      .features-band {
+        background: var(--white);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .feature {
+        min-height: 250px;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fbfcfa;
+      }
+
+      .feature h3 {
+        margin: 20px 0 10px;
+        font-size: 1.25rem;
+      }
+
+      .event-band {
+        background: linear-gradient(135deg, #1b1b1b, var(--company) 52%, var(--lead));
+        color: var(--white);
+      }
+
+      .event-layout {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 42px;
+        align-items: center;
+      }
+
+      .event-text p {
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .event-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .event-row {
+        padding: 18px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: var(--radius);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .event-row strong {
+        color: #ffffff;
+      }
+
+      .event-row span {
+        color: rgba(255, 255, 255, 0.72);
+        text-align: right;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .step {
+        padding: 24px;
+        border-top: 3px solid var(--wine);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .step-number {
+        margin-bottom: 18px;
+        color: var(--white);
+        background: var(--event);
+      }
+
+      .step h3 {
+        margin-bottom: 8px;
+        font-size: 1.12rem;
+      }
+
+      .final-cta {
+        padding: 72px 0;
+        color: var(--white);
+        background: linear-gradient(135deg, var(--wine), var(--wine-dark), #1b1b1b);
+      }
+
+      .final-box {
+        width: min(1160px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .final-cta p {
+        max-width: 660px;
+        color: rgba(255, 255, 255, 0.76);
+      }
+
+      footer {
+        padding: 28px 0;
+        color: var(--muted);
+        background: var(--white);
+      }
+
+      .footer-inner {
+        width: min(1160px, calc(100% - 40px));
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 900px) {
+        .nav {
+          width: min(100% - 28px, 1160px);
+        }
+
+        .nav-links a:not(.btn) {
+          display: none;
+        }
+
+        .hero {
+          min-height: 80vh;
+          background:
+            linear-gradient(90deg, rgba(36, 4, 8, 0.92), rgba(36, 4, 8, 0.62)),
+            url("assets/cableads-hero.png") center / cover no-repeat;
+        }
+
+        .hero-inner,
+        .section-inner,
+        .hero-proof,
+        .final-box,
+        .footer-inner {
+          width: min(100% - 28px, 1160px);
+        }
+
+        .hero-proof,
+        .features-grid,
+        .steps {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .mode-switcher,
+        .event-layout,
+        .panel-content {
+          grid-template-columns: 1fr;
+        }
+
+        .panel-content {
+          align-items: start;
+        }
+
+        .phone-mock {
+          width: min(260px, 100%);
+        }
+
+        .final-box,
+        .footer-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .brand {
+          width: 112px;
+          height: 42px;
+        }
+
+        .brand-logo {
+          width: 100%;
+          max-width: 100%;
+          transform: none;
+        }
+
+        .nav {
+          height: 64px;
+        }
+
+        .btn {
+          width: 100%;
+          white-space: normal;
+          text-align: center;
+        }
+
+        .nav .btn {
+          width: auto;
+          min-height: 40px;
+          padding: 0 14px;
+        }
+
+        .hero-inner {
+          margin-top: 64px;
+          padding: 42px 0 86px;
+        }
+
+        h1 {
+          font-size: 3.15rem;
+        }
+
+        .hero-proof,
+        .features-grid,
+        .steps {
+          grid-template-columns: 1fr;
+        }
+
+        .proof-item {
+          min-height: auto;
+        }
+
+        section {
+          padding: 68px 0;
+        }
+
+        .mode-button {
+          grid-template-columns: 42px 1fr;
+          min-height: 96px;
+          padding: 16px;
+        }
+
+        .mode-icon,
+        .feature-icon,
+        .step-number {
+          width: 42px;
+          height: 42px;
+        }
+
+        .mode-panel {
+          padding: 22px;
+        }
+
+        .event-row {
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .event-row span {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Navegação principal">
+        <a class="brand" href="#top" aria-label="CabLeads">
+          <img class="brand-logo" src="assets/cableads-logo-header.png" alt="CabLeads" />
+        </a>
+        <div class="nav-links">
+          <a href="#captacao">Captação</a>
+          <a href="#personalizacao">Personalização</a>
+          <a href="#eventos">Eventos</a>
+          <a class="btn btn-primary" href="https://cab.inf.br/leads/login/cadastro">Cadastrar empresa</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="CabLeads">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Feiras, exposições e eventos</p>
+            <h1>CabLeads</h1>
+            <p>
+              Capture contatos no estande, organize tudo no aplicativo e transforme cada conversa do evento em uma
+              oportunidade real para sua equipe comercial.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://cab.inf.br/leads/login/cadastro">Começar agora</a>
+              <a class="btn btn-secondary" href="#captacao">Ver formas de coleta</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="hero-proof" aria-label="Recursos principais">
+        <div class="proof-item">
+          <span class="proof-number">3</span>
+          <span>formas de capturar leads no evento</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">QR</span>
+          <span>auto cadastro para visitantes no estande</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">100%</span>
+          <span>personalizável com logo, cores e perguntas</span>
+        </div>
+        <div class="proof-item">
+          <span class="proof-number">+</span>
+          <span>sorteios de brindes com os leads cadastrados</span>
+        </div>
+      </div>
+
+      <section id="captacao">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Coleta sem atrito</p>
+            <h2>Escolha o jeito certo de captar em cada momento do estande.</h2>
+            <p>
+              Use o CabLeads durante a abordagem, deixe o visitante se cadastrar sozinho ou leia o QR Code do crachá
+              quando o evento oferecer integração.
+            </p>
+          </div>
+
+          <div class="mode-switcher">
+            <div class="mode-list" role="tablist" aria-label="Formas de captação">
+              <button class="mode-button is-active" type="button" data-mode="manual" role="tab" aria-selected="true">
+                <span class="mode-icon">01</span>
+                <span>
+                  <strong>Registro manual</strong>
+                  <span>O expositor ou vendedor preenche os dados direto no aplicativo.</span>
+                </span>
+              </button>
+              <button class="mode-button" type="button" data-mode="self" role="tab" aria-selected="false">
+                <span class="mode-icon">02</span>
+                <span>
+                  <strong>QR Code no estande</strong>
+                  <span>O visitante aponta a câmera, acessa a tela personalizada e envia seus dados.</span>
+                </span>
+              </button>
+              <button class="mode-button" type="button" data-mode="badge" role="tab" aria-selected="false">
+                <span class="mode-icon">03</span>
+                <span>
+                  <strong>Leitura do crachá</strong>
+                  <span>Em eventos integrados, basta ler o QR Code do crachá ou convite do visitante.</span>
+                </span>
+              </button>
+            </div>
+
+            <div class="mode-panel" aria-live="polite">
+              <div class="panel-content">
+                <div class="panel-copy">
+                  <p class="eyebrow">Modo ativo</p>
+                  <h2 id="mode-title">Registro manual</h2>
+                  <p id="mode-text">
+                    Ideal para conversas qualificadas: sua equipe coleta nome, contato e respostas personalizadas sem
+                    depender de papel, foto de crachá ou planilha improvisada.
+                  </p>
+                  <div class="badge-row" id="mode-badges">
+                    <span class="badge">Abordagem comercial</span>
+                    <span class="badge">Perguntas sob medida</span>
+                    <span class="badge">Dados centralizados</span>
+                  </div>
+                </div>
+                <div class="phone-mock" aria-hidden="true">
+                  <div class="phone-top">
+                    <span>CabLeads</span>
+                    <span class="phone-dots"><span></span><span></span><span></span></span>
+                  </div>
+                  <div class="phone-body" id="phone-body">
+                    <div class="field-line"></div>
+                    <div class="field-line"></div>
+                    <div class="field-line short"></div>
+                    <div class="field-line"></div>
+                    <div class="field-line short"></div>
+                    <div class="field-line"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features-band" id="personalizacao">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Sua marca na frente</p>
+            <h2>Personalize a experiência de quem visita o seu estande.</h2>
+            <p>
+              A tela de cadastro pode acompanhar a identidade da empresa e as perguntas que realmente importam para o
+              seu time de vendas.
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M14.5 4.5 19.5 9.5"/><path d="M13 6 5.8 13.2a2.8 2.8 0 0 0-.7 1.2L4 20l5.6-1.1a2.8 2.8 0 0 0 1.2-.7L18 11"/><path d="m16 3 5 5-2 2-5-5z"/></svg>
+              </div>
+              <h3>Logo e cores da empresa</h3>
+              <p>Use sua marca na tela de auto cadastro e mantenha a experiência alinhada ao visual do estande.</p>
+            </article>
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 11.5a3 3 0 1 1 4.8 2.4c-.9.7-1.8 1.3-1.8 2.6"/><path d="M12 20h.01"/><circle cx="12" cy="12" r="9"/></svg>
+              </div>
+              <h3>Perguntas personalizadas</h3>
+              <p>Crie perguntas abertas, sim ou não, múltipla escolha, seleção e mensagens personalizadas.</p>
+            </article>
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3>Usuários por equipe</h3>
+              <p>Cadastre vendedores e administradores para operar a coleta de leads com mais controle.</p>
+            </article>
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>
+              </div>
+              <h3>Eventos sob demanda</h3>
+              <p>Cadastre eventos de 5 ou 30 dias ou adquira eventos disponibilizados diretamente no aplicativo.</p>
+            </article>
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 1 1 2.2-3.7C10.5 4.7 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 1 0-2.2-3.7C13.5 4.7 12 7 12 7z"/></svg>
+              </div>
+              <h3>Sorteios de brindes</h3>
+              <p>Use os leads cadastrados para realizar sorteios no próprio app e aumentar o engajamento no estande.</p>
+            </article>
+            <article class="feature">
+              <div class="feature-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+              </div>
+              <h3>Base organizada</h3>
+              <p>Centralize os contatos do evento e reduza perdas causadas por fichas soltas, fotos e anotações.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="event-band" id="eventos">
+        <div class="section-inner event-layout">
+          <div class="event-text">
+            <p class="eyebrow">Antes, durante e depois</p>
+            <h2>O evento acaba. Os leads ficam prontos para trabalhar.</h2>
+            <p>
+              O CabLeads foi pensado para o ritmo de feira: preparar a coleta, registrar visitantes durante a exposição
+              e manter a lista organizada para o pós-evento.
+            </p>
+          </div>
+          <div class="event-list" aria-label="Fluxo do evento">
+            <div class="event-row">
+              <strong>Prepare</strong>
+              <span>crie o evento, ajuste a marca e defina perguntas</span>
+            </div>
+            <div class="event-row">
+              <strong>Capture</strong>
+              <span>use formulário manual, QR no estande ou leitura de crachá</span>
+            </div>
+            <div class="event-row">
+              <strong>Engaje</strong>
+              <span>realize sorteios de brindes com os contatos cadastrados</span>
+            </div>
+            <div class="event-row">
+              <strong>Acompanhe</strong>
+              <span>acesse os leads registrados para acionar oportunidades</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">Como funciona</p>
+            <h2>Do cadastro da empresa ao lead pronto para contato.</h2>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <div class="step-number">1</div>
+              <h3>Cadastre sua empresa</h3>
+              <p>Informe os dados, adicione usuários e configure a identidade visual.</p>
+            </article>
+            <article class="step">
+              <div class="step-number">2</div>
+              <h3>Escolha o evento</h3>
+              <p>Compre eventos disponíveis ou ative um pacote por período.</p>
+            </article>
+            <article class="step">
+              <div class="step-number">3</div>
+              <h3>Configure a coleta</h3>
+              <p>Defina perguntas, imprima QR Code e prepare a equipe do estande.</p>
+            </article>
+            <article class="step">
+              <div class="step-number">4</div>
+              <h3>Capture e sorteie</h3>
+              <p>Registre contatos, acompanhe a base e use brindes para gerar interação.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="final-box">
+          <div>
+            <h2>Pronto para captar melhor no próximo evento?</h2>
+            <p>
+              Leve para o estande uma forma simples de coletar contatos, qualificar visitantes e manter sua marca em
+              destaque.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="https://cab.inf.br/leads/login/cadastro">Cadastrar minha empresa</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <strong>CabLeads</strong>
+        <span>Coleta de leads para feiras, exposições e eventos.</span>
+      </div>
+    </footer>
+
+    <script>
+      const modes = {
+        manual: {
+          title: "Registro manual",
+          text:
+            "Ideal para conversas qualificadas: sua equipe coleta nome, contato e respostas personalizadas sem depender de papel, foto de crachá ou planilha improvisada.",
+          badges: ["Abordagem comercial", "Perguntas sob medida", "Dados centralizados"],
+          body:
+            '<div class="field-line"></div><div class="field-line"></div><div class="field-line short"></div><div class="field-line"></div><div class="field-line short"></div><div class="field-line"></div>',
+        },
+        self: {
+          title: "QR Code no estande",
+          text:
+            "Perfeito para picos de movimento: imprima o QR Code, deixe visivel no estande e permita que o visitante preencha a tela personalizada da sua empresa.",
+          badges: ["Auto cadastro", "Logo e cores", "Menos fila no atendimento"],
+          body:
+            '<div class="qr-block"></div><div class="field-line"></div><div class="field-line short"></div><div class="field-line"></div>',
+        },
+        badge: {
+          title: "Leitura do crachá",
+          text:
+            "Em eventos com integração, a equipe faz a leitura do QR Code do crachá ou convite e recebe os dados preenchidos para acelerar a abordagem.",
+          badges: ["Eventos integrados", "Captura rápida", "Menos digitação"],
+          body:
+            '<div class="qr-block"></div><div class="field-line short"></div><div class="field-line"></div><div class="field-line short"></div>',
+        },
+      };
+
+      const buttons = document.querySelectorAll(".mode-button");
+      const title = document.querySelector("#mode-title");
+      const text = document.querySelector("#mode-text");
+      const badges = document.querySelector("#mode-badges");
+      const phoneBody = document.querySelector("#phone-body");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const mode = modes[button.dataset.mode];
+          buttons.forEach((item) => {
+            item.classList.remove("is-active");
+            item.setAttribute("aria-selected", "false");
+          });
+          button.classList.add("is-active");
+          button.setAttribute("aria-selected", "true");
+          title.textContent = mode.title;
+          text.textContent = mode.text;
+          badges.innerHTML = mode.badges.map((badge) => `<span class="badge">${badge}</span>`).join("");
+          phoneBody.innerHTML = mode.body;
+        });
+      });
+    </script>
+  </body>
+</html>
