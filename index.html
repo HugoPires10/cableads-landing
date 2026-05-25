@@ -305,7 +305,20 @@
       .section-heading p,
       .feature p,
       .step p {
-        text-align: center;
+        text-align: justify;
+        text-align-last: center;
+        hyphens: auto;
+      }
+
+      .panel-copy p,
+      .event-text p {
+        text-align: justify;
+        text-align-last: left;
+        hyphens: auto;
+      }
+
+      .panel-copy p:not(.eyebrow) {
+        color: rgba(255, 255, 255, 0.76);
       }
 
       .mode-switcher {
@@ -576,6 +589,11 @@
         text-align: center;
       }
 
+      .step h3,
+      .feature h3 {
+        text-align: center;
+      }
+
       .step-number {
         margin: 0 auto 18px;
         color: var(--white);
@@ -709,6 +727,15 @@
 
         h1 {
           font-size: 3.15rem;
+        }
+
+        .hero-copy > p {
+          max-width: 100%;
+          font-size: 1rem;
+          line-height: 1.58;
+          text-align: justify;
+          text-align-last: left;
+          hyphens: auto;
         }
 
         .hero-proof,
@@ -1069,11 +1096,3 @@
     </script>
   </body>
 </html>
-        .hero-copy > p {
-          max-width: 100%;
-          font-size: 1rem;
-          line-height: 1.58;
-          text-align: justify;
-          text-align-last: left;
-          hyphens: auto;
-        }
